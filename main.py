@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import data_input
+import data_quality
 
 class battery():
     data = '数据为空'
@@ -18,6 +19,7 @@ class battery():
     cap_now = '未导出当前容量项'
     soc = '未导出soc项'
     charge_count = '未导出充电次数项'
+    sampling_rate = '未检查采样频率'
     def __init__(self):
         self.path = data_input.get_path()
         self.data = data_input.get_data(self.path)
@@ -52,16 +54,18 @@ class battery():
         #只能解决跳变一个值的数据
         self.data = data_input.delete_difference_irrational(self.data,'gmt_time')
         #可以删除多个重采样的值，只保存一个
-        self.data = data_input.delete_vol_wave(self.data) 
+        self.data = data_input.delete_vol_wave(self.data)
+    def check_quality(self):
+        self.sampling_rate = data_quality.get_sampling_rate(self.data)
+
 
     
 
 if __name__ == "__main__":
     bat1 = battery()
-    bat1.filtrate_with_sn()
-    bat1.filtrate_with_state()
-    bat1.data_clean()
     print(bat1.data)
+    bat1.check_quality()
+    print(bat1.sampling_rate)
 
 
 
