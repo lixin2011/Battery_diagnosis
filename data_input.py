@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 import pandas as pd
 import os
-
-
 def get_path(): 
     '''
     返回电池数据文件具体路径
