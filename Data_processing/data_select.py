@@ -1,6 +1,14 @@
 import pandas as pd
 import os
 
+def get_sn(data):
+    '''
+    输入数据，返回数据中存在的sn
+    '''
+    sn = data.iloc[:,0]
+    data_sn = list(pd.unique(sn))
+    return data_sn
+
 def select_sn(data,sn):
     '''
     输入数据及编号，返回给定电池编号对应数据
@@ -12,6 +20,7 @@ def get_state(data):
     '''
     输入数据，返回数据中存在的state
     '''
+
     sta = data.loc[:,'status']
     sta_unique = pd.unique(sta)
     return sta_unique

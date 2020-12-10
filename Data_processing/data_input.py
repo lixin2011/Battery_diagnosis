@@ -12,7 +12,7 @@ def get_path():
     except FileExistsError:
         print('\n********************   目录D:\qixiang已存在   ********************')
     
-    input('\n请在目录D:\qixiang放入单个电池数据文件(支持csv和xlsx文件，按回车继续)')
+    # input('\n请在目录D:\qixiang放入单个电池数据文件(支持csv和xlsx文件，按回车继续)')
     # 选择文件
     os.chdir(r'D:\qixiang')  
     file_list = os.listdir(r'D:\qixiang')
@@ -27,19 +27,16 @@ def get_data(path):
     file_type = path.split('.')[-1]
     print('\n********************   数据读取中，请稍候   ********************')
     if file_type == 'xlsx':
-        data_all = pd.read_excel(path)
+        data_all = pd.read_excel(path,index_col='gmt_time')
     elif file_type == 'csv':
-        data_all = pd.read_csv(path,encoding='gbk')
-    print('\n********************   数据读取完成   ********************')
+        data_all = pd.read_csv(path,encoding='gbk',index_col='gmt_time')
+    print('\n********************   数据读取完成   ********************\n')
+    columns_strip = data_all.columns.map(lambda x:x.strip())
+    data_all.columns = columns_strip   #清除掉数据表中可能存在的空格
+    print(data_all)
     return data_all
 
-def get_sn(data):
-    '''
-    输入数据，返回数据中存在的sn
-    '''
-    sn = data.iloc[:,0]
-    sn_unique = list(pd.unique(sn))
-    return sn_unique
+
 
 
 

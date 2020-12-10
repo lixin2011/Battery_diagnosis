@@ -69,8 +69,8 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    print(bat1.data)
-    bat1.check_quality()
+    
+
 
 
 
