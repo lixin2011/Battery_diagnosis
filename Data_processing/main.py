@@ -28,19 +28,32 @@ class battery():
         self.path = data_input.get_path()
         self.data = data_input.get_data(self.path)
     def select_with_sn(self):
-        sn_list = data_input.get_sn(self.data)
+        sn_list = data_select.get_sn(self.data)
         print('\n已上传的电池编号如下：',sn_list)
-        sn_num = int(input("\n输入想要查询的电池编号（使用列表序号，序号从0开始）："))
-        self.sn = sn_list[sn_num]
+        sn_num_list = input("\n输入想要查询的电池编号（使用列表序号，序号从0开始）（用空格隔开）（可为空，查询所有数据）：")
+        if sn_num_list != '':
+            sn_num_list = sn_num_list.split(' ') 
+            sn_num_list = [int(sn_num_list[i]) for i in range(len(sn_num_list))]
+            sn_list_selected = [sn_list[i] for i in sn_num_list]
+        else:
+            sn_list_selected = ''
+        self.sn = sn_list_selected
         self.data = data_select.select_sn(self.data,self.sn)
     def select_with_state(self):
-        state_list = data_input.get_state(self.data)
+        state_list = data_select.get_state(self.data)
         print('\n已上传的电池状态如下：',state_list)
-        self.state = state_list[int(input("\n输入想要查询的电池状态（使用列表序号，序号从0开始）："))]
+        state_num_list = input("\n输入想要查询的电池状态（使用列表序号，序号从0开始）（用空格隔开）（可为空，查询所有数据）：")
+        if state_num_list != '':
+            state_num_list = state_num_list.split(' ') 
+            state_num_list = [int(state_num_list[i]) for i in range(len(state_num_list))]
+            state_list_selected = [state_list[i] for i in state_num_list]
+        else:
+            state_list_selected = ''
+        self.state = state_list_selected
         self.data = data_select.select_state(self.data,self.state)
     def select_with_time(self):
-        self.time_start = input('\n输入查询起始时间（输入年，月，日，时，分，秒，使用空格隔开）\n').split(' ') 
-        self.time_end = input('\n输入查询终止时间（输入年，月，日，时，分，秒，使用空格隔开）\n').split(' ') 
+        self.time_start = input('\n输入查询起始时间（任选年或月或日以及其组合，使用空格隔开）（可为空，查询之前的数据，包括当前时间点）：')
+        self.time_end = input('\n输入查询终止时间（任选年或月或日以及其组合，使用空格隔开）（可为空，查询以后的数据，包括当前时间点）：')
         self.data = data_select.select_time(self.data,self.time_start,self.time_end)
     def export_data(self):
         self.temp = data_export.export_temp(self.data)
@@ -69,7 +82,10 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    
+    bat1.select_with_sn()
+    bat1.select_with_state()
+    bat1.select_with_time()
+
 
 
 
