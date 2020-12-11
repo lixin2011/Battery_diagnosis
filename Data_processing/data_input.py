@@ -32,7 +32,7 @@ def get_data(path):
         data_all = pd.read_csv(path,encoding='gbk',index_col='gmt_time')
     print('\n********************   数据读取完成   ********************\n')
     columns_strip = data_all.columns.map(lambda x:x.strip())
-    data_all.columns = columns_strip   #清除掉数据表中可能存在的空格
+    data_all.columns = columns_strip   #清除掉数据表列索引中可能存在的空格
     print(data_all)
     return data_all
 

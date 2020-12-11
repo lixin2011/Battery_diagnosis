@@ -82,9 +82,11 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    bat1.select_with_sn()
-    bat1.select_with_state()
-    bat1.select_with_time()
+    # bat1.select_with_sn()
+    # bat1.select_with_state()
+    # bat1.select_with_time()
+    bat1.export_data()
+    print(bat1.vol_mono)
 
 
 
