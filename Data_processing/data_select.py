@@ -1,13 +1,13 @@
-import pandas as pd
-import os
-import tqdm
+from pandas import DataFrame
+from pandas import unique,concat
+from tqdm import tqdm
 
 def get_sn(data):
     '''
     输入数据，返回数据中存在的sn
     '''
     sn = data.iloc[:,0]
-    sn_unique = list(pd.unique(sn))
+    sn_unique = list(unique(sn))
     return sn_unique
 
 def select_sn(data,sn_list):
@@ -16,9 +16,9 @@ def select_sn(data,sn_list):
     '''
     print('\n')
     if sn_list:
-        data_sn = pd.DataFrame(columns=data.columns)
-        for sn in tqdm.tqdm(sn_list):
-            data_sn = pd.concat([data.loc[data.loc[:,'batsn'] == sn,:],data_sn])
+        data_sn = DataFrame(columns=data.columns)
+        for sn in tqdm(sn_list):
+            data_sn = concat([data.loc[data.loc[:,'batsn'] == sn,:],data_sn])
     else:
         data_sn = data
     print('\n')
@@ -30,7 +30,7 @@ def get_state(data):
     输入数据，返回数据中存在的state
     '''
     sta = data.loc[:,'status']
-    sta_unique = pd.unique(sta)
+    sta_unique = unique(sta)
     return sta_unique
 
 def select_state(data,state_list):
@@ -39,9 +39,9 @@ def select_state(data,state_list):
     '''
     print('\n')
     if state_list:
-        data_state = pd.DataFrame(columns=data.columns)
-        for state in tqdm.tqdm(state_list):
-            data_state = pd.concat([data.loc[data.loc[:,'status'] == state,:],data_state])
+        data_state = DataFrame(columns=data.columns)
+        for state in tqdm(state_list):
+            data_state = concat([data.loc[data.loc[:,'status'] == state,:],data_state])
     else:
         data_state = data
     print('\n')

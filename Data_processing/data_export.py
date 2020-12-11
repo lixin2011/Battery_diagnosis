@@ -1,5 +1,3 @@
-import pandas as pd
-import os
 
 def export_temp(data):
     '''

@@ -23,7 +23,11 @@ class battery():
     soc = '未导出soc项'
     charge_count = '未导出充电次数项'
     sampling_rate = '未检查采样频率'
-    data_effect = '未进行数据有效性检查'
+    data_validity = '未进行数据有效性检查'
+    data_diff_min = '未检查采样频率'
+    data_diff_max = '未检查采样频率'
+    data_valid = '未进行数据有效性检查'
+    data_invalid = '未进行数据有效性检查'
     def __init__(self):
         self.path = data_input.get_path()
         self.data = data_input.get_data(self.path)
@@ -64,6 +68,9 @@ class battery():
         self.cap_now = data_export.export_cap_now(self.data)
         self.soc = data_export.export_soc(self.data)
         self.charge_count = data_export.export_charge_count(self.data)
+    def check_data(self):
+        self.sampling_rate,self.data_diff_min,self.data_diff_max = data_check.get_sampling_rate(self.data)
+        self.data_validity,self.data_valid,self.data_invalid = data_check.get_data_validity(self.data)
     def clean_data(self):
         self.data = data_clean.delete_na(self.data)
         self.data = data_clean.delete_value_0(self.data,'batvoltage')
@@ -72,9 +79,7 @@ class battery():
         self.data = data_clean.delete_difference_irrational(self.data,'gmt_time')
         #可以删除多个重采样的值，只保存一个
         self.data = data_clean.delete_vol_wave(self.data)
-    def check_quality(self):
-        self.sampling_rate = data_check.get_sampling_rate(self.data)
-        # self.data_effect = data_quality.get_data_effect(self.data)
+
 
 
 
@@ -82,11 +87,13 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    # bat1.select_with_sn()
-    # bat1.select_with_state()
-    # bat1.select_with_time()
+    bat1.select_with_sn()
+    bat1.select_with_state()
+    bat1.select_with_time()
     bat1.export_data()
-    print(bat1.vol_mono)
+    bat1.check_data()
+    print(bat1.data_invalid)
+
 
 
 
