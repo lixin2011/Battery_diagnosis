@@ -75,10 +75,9 @@ class battery():
         self.data = data_clean.delete_na(self.data)
         self.data = data_clean.delete_value_0(self.data,'batvoltage')
         self.data = data_clean.delete_difference_irrational(self.data,'batchargecount')
-        #只能解决跳变一个值的数据
         self.data = data_clean.delete_difference_irrational(self.data,'gmt_time')
-        #可以删除多个重采样的值，只保存一个
-        self.data = data_clean.delete_vol_wave(self.data)
+        
+        # self.data = data_clean.delete_vol_wave(self.data)
 
 
 
@@ -87,12 +86,13 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    bat1.select_with_sn()
+    '''bat1.select_with_sn()
     bat1.select_with_state()
     bat1.select_with_time()
     bat1.export_data()
     bat1.check_data()
-    print(bat1.data_invalid)
+    print(bat1.data_invalid)'''
+    bat1.clean_data()
 
 
 

@@ -1,5 +1,6 @@
 from pandas import read_csv,read_excel
 from os import mkdir,chdir,listdir
+from tqdm import tqdm
 def get_path(): 
     '''
     返回电池数据文件具体路径
@@ -25,15 +26,18 @@ def get_data(path):
     输入文件路径，读取并返回所有电池数据
     '''
     file_type = path.split('.')[-1]
-    print('\n********************   数据读取中，请稍候   ********************')
-    if file_type == 'xlsx':
-        data_all = read_excel(path,index_col='gmt_time')
-    elif file_type == 'csv':
-        data_all = read_csv(path,encoding='gbk',index_col='gmt_time')
+    print('\n********************   数据读取中，请稍候   ********************\n')
+    with tqdm(total=100) as pbar:
+        pbar.update(0)
+        if file_type == 'xlsx':
+            data_all = read_excel(path,index_col='gmt_time')
+        elif file_type == 'csv':
+            data_all = read_csv(path,encoding='gbk',index_col='gmt_time')
+        pbar.update(100)
     print('\n********************   数据读取完成   ********************\n')
     columns_strip = data_all.columns.map(lambda x:x.strip())
     data_all.columns = columns_strip   #清除掉数据表列索引中可能存在的空格
-    print(data_all)
+    print(data_all.describe())
     return data_all
 
 
