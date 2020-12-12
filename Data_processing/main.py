@@ -73,11 +73,15 @@ class battery():
         self.data_validity,self.data_valid,self.data_invalid = data_check.get_data_validity(self.data)
     def clean_data(self):
         self.data = data_clean.delete_na(self.data)
+        print(self.data)
         self.data = data_clean.delete_value_0(self.data,'batvoltage')
+        print(self.data)
         self.data = data_clean.delete_difference_irrational(self.data,'batchargecount')
+        print(self.data)
         self.data = data_clean.delete_difference_irrational(self.data,'gmt_time')
-        
-        # self.data = data_clean.delete_vol_wave(self.data)
+        print(self.data)
+        self.data = data_clean.delete_vol_wave(self.data)
+        print(self.data)
 
 
 
@@ -91,8 +95,9 @@ if __name__ == "__main__":
     bat1.select_with_time()
     bat1.export_data()
     bat1.check_data()
-    print(bat1.data_invalid)'''
+    print(bat1.data_validity)'''
     bat1.clean_data()
+    # print(bat1.data)
 
 
 
