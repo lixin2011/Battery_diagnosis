@@ -69,7 +69,7 @@ def delete_difference_irrational(data,column_name):
         print('\n充电次数跳变数据如下\n')
         for error_index in error_index_list:
             print(data.loc[error_index - 1:error_index + 2,:])
-            sleep(2)
+            # sleep(2)
         print('\n开始删除充电次数跳变数据\n')
         for error_index in tqdm(error_index_list):
             data = data.drop(error_index)
@@ -89,7 +89,7 @@ def delete_difference_irrational(data,column_name):
         print('\n重采样数据如下\n')
         for error_index in error_index_list:
             print(data.loc[error_index - 1:error_index + 1,:])
-            sleep(2)
+            # sleep(2)
         print('\n开始删除重采样数据\n')
         for error_index in tqdm(error_index_list):
             data = data.drop(error_index)
@@ -134,7 +134,7 @@ def delete_vol_wave(data):
     print('\n单体电压跳变数据如下\n')
     for mono,index in zip(error_mono,error_index):
         print(data.loc[index-2:index+2,['gmt_time',mono]])
-        sleep(2)
+        # sleep(2)
     print('\n开始删除单体电压跳变数据\n')
     for error_index in tqdm(error_index):
         data = data.drop(error_index)

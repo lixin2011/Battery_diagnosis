@@ -8,13 +8,19 @@ import data_check
 import border_check
 
 class battery():
+    # 经过处理后的数据
     data = '数据为空'
+    # 数据文件所在的路径
     path = '路径为空'
+    # 数据文件中包含的sn
     sn = '未筛选编号项'
+    # 数据的开始时间
     time_start = '未筛选开始时间项'
+    # 数据的结束时间
     time_end = '未筛选结束时间项'
+    # 数据中包含的电池状态
     state = '未筛选状态项'
-    # 筛选的单项数据
+    # 数据中的各个类型
     temp = '未导出温度项'
     cur = '未导出电流项'
     vol_total = '未导出总电压项'
@@ -23,14 +29,21 @@ class battery():
     cap_now = '未导出当前容量项'
     soc = '未导出soc项'
     charge_count = '未导出充电次数项'
+    # 数据的采样频率
     sampling_rate = '未检查采样频率'
+    # 有效性和无效性数据占比
     data_validity = '未进行数据有效性检查'
+    # 最大和最小时间间隔的具体数据
     data_diff_min = '未检查采样频率'
     data_diff_max = '未检查采样频率'
+    # 具体的有效和无效数据
     data_valid = '未进行数据有效性检查'
     data_invalid = '未进行数据有效性检查'
+    # 数据的具体统计
     statistic_data = '未进行统计分析'
+    # 超边界的数据量统计
     boder_check_frequency = '未进行边界检查'
+    # 不同类型超边界的具体数据
     overcharge_data = '未进行边界检查'
     overdischarge_data = '未进行边界检查'
     over_cur_data = '未进行边界检查'
@@ -95,18 +108,20 @@ class battery():
 
 if __name__ == "__main__":
     bat1 = battery()
-    # bat1.select_with_sn()
-    # bat1.select_with_state()
-    # bat1.select_with_time()
-    # bat1.export_data()
-    # bat1.check_data()
-    # print(bat1.data_validity)
-    # bat1.clean_data()
-    # print(bat1.data)
+    '''
+    使用bat1.function()的格式获得数据结果
+    比如bat1.clean_data()就进行了数据清理
+    使用print(bat1.name)的格式来获得结果
+    比如print(bat1.data)就获取了当前处理的数据
+    '''
+    bat1.select_with_sn()
+    bat1.select_with_state()
+    bat1.select_with_time()
+    bat1.export_data()
+    bat1.check_data()
+    bat1.clean_data()
     bat1.check_border()
-    print(bat1.boder_check_frequency)
-    print(bat1.overcharge_data)
-    print(bat1.statistic_data)
+
 
 
 
