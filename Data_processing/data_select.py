@@ -6,8 +6,8 @@ def get_sn(data):
     '''
     输入数据，返回数据中存在的sn
     '''
-    sn = data.iloc[:,0]
-    sn_unique = list(unique(sn))
+    sn = data.loc[:,'batsn']
+    sn_unique = unique(sn)
     return sn_unique
 
 def select_sn(data,sn_list):
@@ -54,6 +54,9 @@ def select_time(data,time_start,time_end):
     输入可以一侧为空或全部为空，表示不做时间点限制
     '''
     print(time_start)
+    index_or = data.index
+    data.index = data.loc[:,'gmt_time']
+    # 使用时间项作为索引，可以更好的控制索引
     if (time_start != '')&(time_end != ''):
         data_time = data.loc[time_start:time_end,:]
     elif (time_start == '')&(time_end != ''):
@@ -62,5 +65,6 @@ def select_time(data,time_start,time_end):
         data_time = data.loc[time_start:,:]
     else:
         data_time = data
+    data_time.index = index_or
     print(data_time)
     return data_time

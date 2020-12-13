@@ -6,16 +6,15 @@ def get_sampling_rate(data):
     '''
     输入数据，返回采样间隔构成的字典
     '''
-    time = DataFrame(data.index)
-    time['gmt_time'] = time['gmt_time'].apply(lambda x:x.value/(10**9))
-    diff = time.diff(periods=1)
-    diff_mean =diff['gmt_time'].mean()
-    diff_max = diff['gmt_time'].max()
-    diff_min = diff['gmt_time'].min()
-    data_diff_max_index = diff.loc[diff['gmt_time'] == diff_max,:].index.tolist()
-    data_diff_max = data.iloc[(data_diff_max_index[0] - 2):(data_diff_max_index[0] + 2),]
-    data_diff_min_index = diff.loc[diff['gmt_time'] == diff_min,:].index.tolist()
-    data_diff_min = data.iloc[(data_diff_min_index[0] - 2):(data_diff_min_index[0] + 2),]
+    data['gmt_time_value'] = data['gmt_time'].apply(lambda x:x.value/(10**9))
+    diff = data['gmt_time_value'].diff(periods=1)
+    diff_mean =diff.mean()
+    diff_max = diff.max()
+    diff_min = diff.min()
+    data_diff_max_index = diff[diff == diff_max].index.tolist()[0]
+    data_diff_max = data.iloc[(data_diff_max_index - 2):(data_diff_max_index + 2),:]
+    data_diff_min_index = diff[diff == diff_min].index.tolist()[0]
+    data_diff_min = data.iloc[(data_diff_min_index - 2):(data_diff_min_index + 2),:]
     return {'最小采样间隔':diff_min,'最大采样间隔':diff_max,'平均采样间隔':diff_mean},data_diff_min,data_diff_max
 
 def get_data_validity(data):
@@ -33,7 +32,7 @@ def get_data_validity(data):
     check_frame['current_check'] = (isna(data['batcurrent']))
     print(data.loc[check_frame['current_check'],:])
     print('\n检查电压为空值\n')
-    check_frame['voltage_check'] = (isna(data['batcurrent']))
+    check_frame['voltage_check'] = (isna(data['batvoltage']))
     print(data.loc[check_frame['voltage_check'],:])
     print('\n检查soc为0及空值\n')
     check_frame['soc_check'] = (data['batsoc'] == 0) | (isna(data['batsoc']))

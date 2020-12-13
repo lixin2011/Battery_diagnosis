@@ -45,7 +45,7 @@ def export_soc(data):
     '''
     导出数据的当前容量项
     '''
-    soc = data.loc[:,'batrsoc']
+    soc = data.loc[:,'batsoc']
     return soc
 
 def export_charge_count(data):
