@@ -5,6 +5,7 @@ import data_select
 import data_export
 import data_clean
 import data_check
+import border_check
 
 class battery():
     data = '数据为空'
@@ -28,6 +29,12 @@ class battery():
     data_diff_max = '未检查采样频率'
     data_valid = '未进行数据有效性检查'
     data_invalid = '未进行数据有效性检查'
+    statistic_data = '未进行统计分析'
+    boder_check_frequency = '未进行边界检查'
+    overcharge_data = '未进行边界检查'
+    overdischarge_data = '未进行边界检查'
+    over_cur_data = '未进行边界检查'
+    over_temp_data = '未进行边界检查'
     def __init__(self):
         self.path = data_input.get_path()
         self.data = data_input.get_data(self.path)
@@ -77,22 +84,30 @@ class battery():
         self.data = data_clean.delete_difference_irrational(self.data,'batchargecount')
         self.data = data_clean.delete_difference_irrational(self.data,'gmt_time')
         self.data = data_clean.delete_vol_wave(self.data)
+    def check_border(self):
+        self.statistic_data = border_check.get_statistic_data(self.data)
+        overcharge_threshold = float(input('请输入过充电压阈值：'))
+        overdischarge_threshold = float(input('请输入过放电压阈值：'))
+        over_cur_threshold = float(input('请输入过电流阈值：'))
+        over_temp_threshold = float(input('请输入过温阈值：'))
+        self.boder_check_frequency,self.overcharge_data,self.overdischarge_data,self.over_cur_data,self.over_temp_data = border_check.check_border(self.data,overcharge_threshold,overdischarge_threshold,over_cur_threshold,over_temp_threshold)
 
-
-
-
-    
 
 if __name__ == "__main__":
     bat1 = battery()
-    bat1.select_with_sn()
-    bat1.select_with_state()
-    bat1.select_with_time()
-    bat1.export_data()
-    bat1.check_data()
-    print(bat1.data_validity)
-    bat1.clean_data()
+    # bat1.select_with_sn()
+    # bat1.select_with_state()
+    # bat1.select_with_time()
+    # bat1.export_data()
+    # bat1.check_data()
+    # print(bat1.data_validity)
+    # bat1.clean_data()
     # print(bat1.data)
+    bat1.check_border()
+    print(bat1.boder_check_frequency)
+    print(bat1.overcharge_data)
+    print(bat1.statistic_data)
+
 
 
 

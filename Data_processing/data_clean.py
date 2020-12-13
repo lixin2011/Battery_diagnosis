@@ -44,16 +44,6 @@ def delete_value_0(data,column_name):
     print('\n含0数据删除完成')
     return data_deleted_0
 
-
-
-
-
-
-
-
-
-
-
 def delete_difference_irrational(data,column_name):
     '''
     删除指定列指定差值的数据
