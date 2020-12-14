@@ -93,10 +93,12 @@ class battery():
         self.data_validity,self.data_valid,self.data_invalid = data_check.get_data_validity(self.data)
     def clean_data(self):
         self.data = data_clean.delete_na(self.data)
+        self.data = data_clean.type_convert(self.data)
         self.data = data_clean.delete_value_0(self.data,'batvoltage')
         self.data = data_clean.delete_difference_irrational(self.data,'batchargecount')
         self.data = data_clean.delete_difference_irrational(self.data,'gmt_time')
         self.data = data_clean.delete_vol_wave(self.data)
+
     def check_border(self):
         self.statistic_data = border_check.get_statistic_data(self.data)
         overcharge_threshold = float(input('请输入过充电压阈值：'))

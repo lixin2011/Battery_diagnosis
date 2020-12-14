@@ -1,5 +1,6 @@
 from pandas import unique,concat
 from pandas import DataFrame
+from tqdm import tqdm
 
 def get_statistic_data(data):
     '''
@@ -26,7 +27,7 @@ def check_border(data,charge_vol_threshold,discharge_vol_threshold,cur_threshold
     overcharge_data = DataFrame()
     overdischarge_data = DataFrame()
     sn_list = list(unique(data.loc[:,'batsn']))
-    for sn,index in zip(sn_list,range(len(sn_list))):
+    for sn,index in tqdm(zip(sn_list,range(len(sn_list)))):
         # 进入一块电池
         data_process = data.loc[data['batsn'] == sn,:]
         boder_check_frequency.loc[index,'sn'] = sn
